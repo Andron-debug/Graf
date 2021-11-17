@@ -11,22 +11,22 @@ using Matrix;
 
 namespace Graf
 {
+    
     public partial class Graf_input : Form
     {
+        CheckBox[,] graf;
         int vertex;
-        MyMatrix graf;
         public Graf_input(int count)
         {
             InitializeComponent();
             vertex = count;
-            graf = new MyMatrix(count, count);
         }
 
         private void Graf_input_Load(object sender, EventArgs e)
         {
             graf_tableLayoutPanel.ColumnCount = vertex + 1;
             graf_tableLayoutPanel.RowCount = vertex + 1;
-            
+            graf = new CheckBox[vertex, vertex];
             foreach (ColumnStyle s in graf_tableLayoutPanel.ColumnStyles)
             {
                 s.SizeType = SizeType.Absolute;
@@ -37,6 +37,7 @@ namespace Graf
                 s.SizeType = SizeType.Absolute;
                 s.Height = 25;
             }
+            
             for (int i = 0; i < vertex; i++)
             {
                 string name = i.ToString();
@@ -56,9 +57,9 @@ namespace Graf
             for (int i = 1; i <= vertex; i++)
                 for (int j = 1; j <= vertex; j++)
                 {
-                    CheckBox cb = new CheckBox();
-                    cb.Width = 25;
-                    graf_tableLayoutPanel.Controls.Add(cb, i, j);
+                    graf[i - 1, j - 1] = new CheckBox();
+                    graf[i - 1, j - 1].Width = 25;
+                    graf_tableLayoutPanel.Controls.Add(graf[i - 1, j - 1], i, j);
                 }
             this.Width = graf_tableLayoutPanel.Width + 40;
 
@@ -69,5 +70,49 @@ namespace Graf
         {
             Application.Exit();
         }
+
+        private void Analyze_Click(object sender, EventArgs e)
+        {
+            if (is_graf.Checked)
+            {
+                //Граф
+                if (is_graf_test())
+                {
+                    
+                }
+                else
+                {
+                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости замыкание автоматически?", "Ошибка ввода", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes) closing();
+                }
+
+            }
+        }
+        private bool is_graf_test()
+        {
+            bool result = true;
+            for (int i = 0; i < vertex; i++)
+            {
+                for (int j = i; j < vertex; j++)
+                    if (graf[i, j].Checked != graf[j, i].Checked)
+                    {
+                        result = false;
+                        break;
+                    }
+                if (!result) break;
+            }
+            return result;
+        }
+        private void closing()
+        {
+            for (int i = 0; i < vertex; i++)
+                for (int j = i; j < vertex; j++)
+                    if (graf[i, j].Checked != graf[j, i].Checked)
+                    {
+                        graf[i, j].Checked = true;
+                        graf[j, i].Checked = true;
+                    }
+        }
+
     }
 }
