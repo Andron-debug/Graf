@@ -70,15 +70,25 @@ namespace Graf
         {
             Application.Exit();
         }
-
+        /*
+        количество вершин ++
+        количество ребер 
+        количество петель
+        максимальная степень(для орграфа — по заходам и по исходам отдельно),
+        категория связности
+        (для графа — связный или несвязный, для орграфа — одна из четырех категорий — сильно связный, односторонне связный, слабо связный или несвязный).
+        */
         private void Analyze_Click(object sender, EventArgs e)
         {
+            int edge;
             if (is_graf.Checked)
             {
                 //Граф
                 if (is_graf_test())
                 {
-                    
+                    edge = checkedCount() / 2;
+                    Form f = new Result(vertex, edge);
+                    f.ShowDialog();
                 }
                 else
                 {
@@ -86,6 +96,12 @@ namespace Graf
                     if (result == DialogResult.Yes) closing();
                 }
 
+            }
+            else
+            {
+                edge = checkedCount();
+                Form f = new Result(vertex, edge);
+                f.ShowDialog();
             }
         }
         private bool is_graf_test()
@@ -101,6 +117,14 @@ namespace Graf
                     }
                 if (!result) break;
             }
+            return result;
+        }
+        private int checkedCount()
+        {
+           int result = 0;
+                for (int i = 0; i < vertex; i++)
+                    for (int j = 0; j < vertex; j++)
+                        if (graf[i, j].Checked) result++;
             return result;
         }
         private void closing()
