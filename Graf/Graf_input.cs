@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Matrix;
 
 namespace Graf
 {
-    
+
     public partial class Graf_input : Form
     {
         CheckBox[,] graf;
@@ -37,7 +30,7 @@ namespace Graf
                 s.SizeType = SizeType.Absolute;
                 s.Height = 25;
             }
-            
+
             for (int i = 0; i < vertex; i++)
             {
                 string name = i.ToString();
@@ -72,22 +65,25 @@ namespace Graf
         }
         /*
         количество вершин ++
-        количество ребер 
-        количество петель
+        количество ребер ++
+        количество петель ++
         максимальная степень(для орграфа — по заходам и по исходам отдельно),
         категория связности
         (для графа — связный или несвязный, для орграфа — одна из четырех категорий — сильно связный, односторонне связный, слабо связный или несвязный).
         */
         private void Analyze_Click(object sender, EventArgs e)
         {
-            int edge;
+            int edge;//кол-во ребр
+            int loops;//кол-во петель
             if (is_graf.Checked)
             {
                 //Граф
                 if (is_graf_test())
                 {
-                    edge = checkedCount() / 2;
-                    Form f = new Result(vertex, edge);
+                    
+                    loops = loopsCount();
+                    edge = checkedCount() / 2 + loops/2;
+                    Form f = new Result(vertex, edge, loops);
                     f.ShowDialog();
                 }
                 else
@@ -95,12 +91,13 @@ namespace Graf
                     DialogResult result = MessageBox.Show("Матрица не симетрична! Провости замыкание автоматически?", "Ошибка ввода", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes) closing();
                 }
-
             }
             else
             {
+                //Орграф
                 edge = checkedCount();
-                Form f = new Result(vertex, edge);
+                loops = loopsCount();
+                Form f = new Result(vertex, edge, loops);
                 f.ShowDialog();
             }
         }
@@ -121,10 +118,10 @@ namespace Graf
         }
         private int checkedCount()
         {
-           int result = 0;
-                for (int i = 0; i < vertex; i++)
-                    for (int j = 0; j < vertex; j++)
-                        if (graf[i, j].Checked) result++;
+            int result = 0;
+            for (int i = 0; i < vertex; i++)
+                for (int j = 0; j < vertex; j++)
+                    if (graf[i, j].Checked) result++;
             return result;
         }
         private void closing()
@@ -136,6 +133,14 @@ namespace Graf
                         graf[i, j].Checked = true;
                         graf[j, i].Checked = true;
                     }
+        }
+        private int loopsCount()
+        {
+            int result = 0;
+            for (int i = 0; i < vertex; i++)
+                if (graf[i, i].Checked)
+                    result++;
+            return result;
         }
 
     }

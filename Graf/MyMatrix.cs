@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Matrix
 {
@@ -34,12 +30,12 @@ namespace Matrix
         }
         public MyMatrix(int nn, int kk)
         {
-            
+
             n = nn;
             k = kk;
             a = new double[n, k];
         }
-        public double this [int i, int j]
+        public double this[int i, int j]
         {
             get
             {
@@ -54,16 +50,16 @@ namespace Matrix
                 a[i, j] = value;
             }
         }
-        public void FillRandom(int min, int max) 
+        public void FillRandom(int min, int max)
         {
             Random r = new Random();
-            for(int i = 0; i < n; i++)
-                for(int j = 0; j < k; j++)
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < k; j++)
                 {
                     a[i, j] = r.Next(min, max + 1);
                 }
         }
-        public static MyMatrix operator + (MyMatrix m1, MyMatrix m2)
+        public static MyMatrix operator +(MyMatrix m1, MyMatrix m2)
         {
             if ((m1.N != m2.N) || (m1.K != m2.K)) throw new ApplicationException("Матрицы должны быть одной размерности");
             MyMatrix r = new MyMatrix(m1.N, m1.K);
@@ -72,7 +68,7 @@ namespace Matrix
                     r[i, j] = m1[i, j] + m2[i, j];
             return r;
         }
-        public static MyMatrix operator - (MyMatrix m1, MyMatrix m2)
+        public static MyMatrix operator -(MyMatrix m1, MyMatrix m2)
         {
             if ((m1.N != m2.N) || (m1.K != m2.K)) throw new ApplicationException("Матрицы должны быть одной размерности");
             MyMatrix r = new MyMatrix(m1.N, m1.K);
@@ -81,12 +77,12 @@ namespace Matrix
                     r[i, j] = m1[i, j] - m2[i, j];
             return r;
         }
-        public static MyMatrix operator * (MyMatrix m1, double k) 
+        public static MyMatrix operator *(MyMatrix m1, double k)
         {
             MyMatrix r = new MyMatrix(m1.N, m1.K);
             for (int i = 0; i < r.N; i++)
                 for (int j = 0; j < r.K; j++)
-                    r[i, j] = m1[i, j]*k;
+                    r[i, j] = m1[i, j] * k;
             return r;
         }
 
@@ -98,7 +94,7 @@ namespace Matrix
                     r[i, j] = m1[i, j] * k;
             return r;
         }
-        public static MyMatrix operator * (MyMatrix m1, MyMatrix m2)
+        public static MyMatrix operator *(MyMatrix m1, MyMatrix m2)
         {
             if (m1.K != m2.N) throw new ApplicationException("Умножение не возможно! Количество столбцов первой матрицы не равно количеству строк второй матрицы.");
             MyMatrix r = new MyMatrix(m1.N, m2.K);
@@ -116,8 +112,8 @@ namespace Matrix
             MyMatrix algeb = new MyMatrix(n, k);
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < k; j++)
-                    algeb[i, j] = Math.Pow(-1, i+j) * MyMatrix.Det(this.cross(i, j));
-            return algeb.Transpose() * (1/det);
+                    algeb[i, j] = Math.Pow(-1, i + j) * MyMatrix.Det(this.cross(i, j));
+            return algeb.Transpose() * (1 / det);
         }
 
         public MyMatrix Transpose()
@@ -150,9 +146,9 @@ namespace Matrix
         {
             double r = 0;
             if (m.N != m.K) throw new ApplicationException("Матрица не квадратная");
-            if (m.N != 1) 
+            if (m.N != 1)
                 for (int j = 0; j < m.K; j++)
-                    r += Math.Pow(-1, j) * m[0, j] * Det(m.cross(0,j));
+                    r += Math.Pow(-1, j) * m[0, j] * Det(m.cross(0, j));
             else r = m[0, 0];
             return r;
         }
@@ -163,7 +159,7 @@ namespace Matrix
             {
                 for (int j = 0; j < k; j++)
                 {
-                    ret += a[i, j]+" ";
+                    ret += a[i, j] + " ";
                 }
                 ret += Environment.NewLine;
             }
