@@ -75,19 +75,37 @@ namespace Graf
         {
             int edge;//кол-во ребр
             int loops;//кол-во петель
+            //Максимальная степень по исходам для орграфа
+          
+            //Максимальная степень по заходам для орграфа
+
             if (is_graf.Checked)
             {
                 //Граф
                 if (is_graf_test())
                 {
-                    
                     loops = loopsCount();
-                    edge = checkedCount() / 2 + loops/2;
-                    Form f = new Result(vertex, edge, loops);
+                    edge = (checkedCount() - loops)/ 2 + loops;
+                    // Максимальная степень
+                    int max = -1;
+                    int max_vertex = -1;
+                    for (int i = 0; i < vertex; i++)
+                    {
+                        int t = 0;
+                        for (int j = 0; j < vertex; j++)
+                            t++;
+                        if (t > max)
+                        {
+                            max = t;
+                            max_vertex = i;
+                        }
+                    }
+                    Form f = new Result(vertex, edge, loops, max, max_vertex);
                     f.ShowDialog();
                 }
                 else
                 {
+
                     DialogResult result = MessageBox.Show("Матрица не симетрична! Провости замыкание автоматически?", "Ошибка ввода", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes) closing();
                 }
@@ -97,7 +115,37 @@ namespace Graf
                 //Орграф
                 edge = checkedCount();
                 loops = loopsCount();
-                Form f = new Result(vertex, edge, loops);
+                //Максимальная степень по заходам
+                int max_in = -1;
+                int max_in_vertex = -1;
+                for (int i = 0; i < vertex; i++)
+                {
+                    int t = 0;
+                    for (int j = 0; j < vertex; j++)
+                        if(graf[i, j].Checked)
+                            t++;
+                    if (t > max_in)
+                    {
+                        max_in = t;
+                        max_in_vertex = i;
+                    }
+                }
+                //Максимальная степень по исходам
+                int max_out = -1;
+                int max_out_vertex = -1;
+                for (int j = 0; j < vertex; j++)
+                {
+                    int t = 0;
+                    for (int i = 0; i < vertex; i++)
+                        if (graf[i, j].Checked)
+                            t++;
+                    if (t > max_out)
+                    {
+                        max_out = t;
+                        max_out_vertex = j;
+                    }
+                }
+                Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex); //int mxi, int mxiv, int mxo, int mxov
                 f.ShowDialog();
             }
         }
