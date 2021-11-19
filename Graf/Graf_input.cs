@@ -76,6 +76,7 @@ namespace Graf
         {
             int edge;//кол-во ребр
             int loops;//кол-во петель
+            string connectivity = "";
             if (is_graf.Checked)
             {
                 //Граф
@@ -90,7 +91,8 @@ namespace Graf
                     {
                         int t = 0;
                         for (int j = 0; j < vertex; j++)
-                            t++;
+                            if (graf[i,j].Checked)
+                                t++;
                         if (t > max)
                         {
                             max = t;
@@ -98,7 +100,9 @@ namespace Graf
                         }
                     }
                     MyMatrix tr = transport();
-                    Form f = new Result(vertex, edge, loops, max, max_vertex);
+                    if (allOne(tr)) connectivity = "связный";
+                    else connectivity = "несвязный";
+                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity);
                     f.ShowDialog();
                 }
                 else
@@ -144,7 +148,8 @@ namespace Graf
                     }
                 }
                 MyMatrix tr = transport();
-                Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex); //int mxi, int mxiv, int mxo, int mxov
+                Console.WriteLine(tr.ToString());
+                Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex, connectivity); //int mxi, int mxiv, int mxo, int mxov
                 f.ShowDialog();
             }
         }
@@ -195,33 +200,30 @@ namespace Graf
             result = new MyMatrix(vertex, vertex);
             for (int i = 0; i < vertex; i++)
                 for (int j = 0; j < vertex; j++)
-                    if (graf[i, j].Checked)
-                        result[i, j] = 1;
-            Console.WriteLine(result.ToString());
-            bool trans = false;
-            while (!trans)
-            {
-                trans = true;
-                MyMatrix old = new MyMatrix(result);
-                result *= result;
-                bool all_one = true;
-                for (int i = 0; i < vertex; i++)
-                    for (int j = 0; j < vertex; j++)
-                        if (result[i, j] > 1)
-                            result[i, j] = 1;
-                Console.WriteLine(result.ToString());
-                if (allOne(result)) return result; ;
-                for (int i = 0; i < vertex; i++)
                 {
-                    for (int j = 0; j < vertex; j++)
-                        if ((old[i, j] != result[i, j]) && (result[i, j] != 1))
-                        {
-                            trans = false;
-                            break;
-                        }
-                    if (!trans) break;
+                    if (graf[i, j].Checked)
+                        result[j, i] = 1;
+                    if (i == j) result[i, j] = 1;
                 }
-                Console.WriteLine(result.ToString());
+            bool trans = false;
+            bool first = true;
+            while (!trans)
+            {            
+                MyMatrix p;
+                int count = 1;
+                p = result * result;
+                for (int i = 1; i < count; i++)
+                    p *= p;
+                count++;
+                trans = true;
+                for(int i = 0; i<vertex; i++)
+                    for(int j = 0; j<vertex; j++)
+                    {
+                        if (p[i, j] > 1) p[i, j] = 1;
+                        if((p[i,j] != result[i, j])&&(p[i,j] == 1)) trans = false; 
+                        if (p[i, j] == 1) result[i, j] = 1;
+                    }
+                
             }
             return result;
         }
