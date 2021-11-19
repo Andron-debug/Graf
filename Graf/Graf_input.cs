@@ -53,7 +53,7 @@ namespace Graf
                 {
                     graf[i - 1, j - 1] = new CheckBox();
                     graf[i - 1, j - 1].Width = 25;
-                    graf_tableLayoutPanel.Controls.Add(graf[i - 1, j - 1], i, j);
+                    graf_tableLayoutPanel.Controls.Add(graf[i - 1, j - 1], j, i);
                 }
             this.Width = graf_tableLayoutPanel.Width + 40;
 
@@ -120,31 +120,31 @@ namespace Graf
                 //Максимальная степень по заходам
                 int max_in = -1;
                 int max_in_vertex = -1;
-                for (int i = 0; i < vertex; i++)
-                {
-                    int t = 0;
-                    for (int j = 0; j < vertex; j++)
-                        if (graf[i, j].Checked)
-                            t++;
-                    if (t > max_in)
-                    {
-                        max_in = t;
-                        max_in_vertex = i;
-                    }
-                }
-                //Максимальная степень по исходам
-                int max_out = -1;
-                int max_out_vertex = -1;
                 for (int j = 0; j < vertex; j++)
                 {
                     int t = 0;
                     for (int i = 0; i < vertex; i++)
                         if (graf[i, j].Checked)
                             t++;
+                    if (t > max_in)
+                    {
+                        max_in = t;
+                        max_in_vertex = j;
+                    }
+                }
+                //Максимальная степень по исходам
+                int max_out = -1;
+                int max_out_vertex = -1;
+                for (int i = 0; i < vertex; i++)
+                {
+                    int t = 0;
+                    for (int j = 0; j < vertex; j++)
+                        if (graf[i, j].Checked)
+                            t++;
                     if (t > max_out)
                     {
                         max_out = t;
-                        max_out_vertex = j;
+                        max_out_vertex = i;
                     }
                 }
                 MyMatrix tr = transport();
@@ -202,15 +202,15 @@ namespace Graf
                 for (int j = 0; j < vertex; j++)
                 {
                     if (graf[i, j].Checked)
-                        result[j, i] = 1;
+                        result[i, j] = 1;
                     if (i == j) result[i, j] = 1;
                 }
+            Console.WriteLine(result);
             bool trans = false;
-            bool first = true;
+            int count = 1;
             while (!trans)
             {            
                 MyMatrix p;
-                int count = 1;
                 p = result * result;
                 for (int i = 1; i < count; i++)
                     p *= p;
