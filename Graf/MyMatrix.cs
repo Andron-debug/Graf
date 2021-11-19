@@ -35,6 +35,16 @@ namespace Matrix
             k = kk;
             a = new double[n, k];
         }
+        public MyMatrix(MyMatrix m)
+        {
+
+            n = m.N;
+            k = m.K;
+            a = new double[n, k];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < k; j++)
+                    a[i, j] = m[i, j];
+        }
         public double this[int i, int j]
         {
             get

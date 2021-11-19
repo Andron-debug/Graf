@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Matrix;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -67,7 +68,7 @@ namespace Graf
         количество вершин ++
         количество ребер ++
         количество петель ++
-        максимальная степень(для орграфа — по заходам и по исходам отдельно),
+        максимальная степень(для орграфа — по заходам и по исходам отдельно)++
         категория связности
         (для графа — связный или несвязный, для орграфа — одна из четырех категорий — сильно связный, односторонне связный, слабо связный или несвязный).
         */
@@ -75,17 +76,13 @@ namespace Graf
         {
             int edge;//кол-во ребр
             int loops;//кол-во петель
-            //Максимальная степень по исходам для орграфа
-          
-            //Максимальная степень по заходам для орграфа
-
             if (is_graf.Checked)
             {
                 //Граф
                 if (is_graf_test())
                 {
                     loops = loopsCount();
-                    edge = (checkedCount() - loops)/ 2 + loops;
+                    edge = (checkedCount() - loops) / 2 + loops;
                     // Максимальная степень
                     int max = -1;
                     int max_vertex = -1;
@@ -100,6 +97,7 @@ namespace Graf
                             max_vertex = i;
                         }
                     }
+                    MyMatrix tr = transport();
                     Form f = new Result(vertex, edge, loops, max, max_vertex);
                     f.ShowDialog();
                 }
@@ -122,7 +120,7 @@ namespace Graf
                 {
                     int t = 0;
                     for (int j = 0; j < vertex; j++)
-                        if(graf[i, j].Checked)
+                        if (graf[i, j].Checked)
                             t++;
                     if (t > max_in)
                     {
@@ -145,6 +143,7 @@ namespace Graf
                         max_out_vertex = j;
                     }
                 }
+                MyMatrix tr = transport();
                 Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex); //int mxi, int mxiv, int mxo, int mxov
                 f.ShowDialog();
             }
@@ -190,6 +189,49 @@ namespace Graf
                     result++;
             return result;
         }
-
+        private MyMatrix transport()
+        {
+            MyMatrix result;
+            result = new MyMatrix(vertex, vertex);
+            for (int i = 0; i < vertex; i++)
+                for (int j = 0; j < vertex; j++)
+                    if (graf[i, j].Checked)
+                        result[i, j] = 1;
+            Console.WriteLine(result.ToString());
+            bool trans = false;
+            while (!trans)
+            {
+                trans = true;
+                MyMatrix old = new MyMatrix(result);
+                result *= result;
+                bool all_one = true;
+                for (int i = 0; i < vertex; i++)
+                    for (int j = 0; j < vertex; j++)
+                        if (result[i, j] > 1)
+                            result[i, j] = 1;
+                Console.WriteLine(result.ToString());
+                if (allOne(result)) return result; ;
+                for (int i = 0; i < vertex; i++)
+                {
+                    for (int j = 0; j < vertex; j++)
+                        if ((old[i, j] != result[i, j]) && (result[i, j] != 1))
+                        {
+                            trans = false;
+                            break;
+                        }
+                    if (!trans) break;
+                }
+                Console.WriteLine(result.ToString());
+            }
+            return result;
+        }
+        private bool allOne(MyMatrix m)
+        {
+            for (int i = 0; i < m.N; i++)
+                for (int j = 0; j < m.K; j++)
+                    if (m[i, j] != 1)
+                        return false;
+            return true;
+        }
     }
 }
