@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using Matrix;
+using System.Collections.Generic;
 
 namespace Graf
 {
@@ -9,12 +11,12 @@ namespace Graf
         int edge;
         int loops;
         string connectivity;
-
+        List<List<int>> comp;
 
         //Граф
         int max = -1;
         int max_vertex = -1;
-        public Result(int v, int e, int l, int m, int mv, string c)
+        public Result(int v, int e, int l, int m, int mv, string c, List<List<int>> cm)
         {
             InitializeComponent();
             Result_textBox.Text = "";
@@ -24,6 +26,7 @@ namespace Graf
             max = m;
             max_vertex = mv;
             connectivity = c;
+            comp = cm;
         }
         //Орграф
         int max_in = -1;
@@ -59,7 +62,13 @@ namespace Graf
                 Result_textBox.Text += $"Максимальная степень по заходам {max_in} у вершины {max_in_vertex}{Environment.NewLine}";
                 Result_textBox.Text += $"Максимальная степень по исходам {max_out} у вершины {max_out_vertex}{Environment.NewLine}";
             }
-            Result_textBox.Text += $"Фактор связности {connectivity}{Environment.NewLine}";
+            Result_textBox.Text += $"Фактор связности: {connectivity}{Environment.NewLine}";
+            Result_textBox.Text += "Компоненты связности" + Environment.NewLine;
+            foreach (List<int> l in comp)
+            {
+                foreach (int c in l) Result_textBox.Text += c + " ";
+                Result_textBox.Text += Environment.NewLine;
+            }
         }
     }
 }

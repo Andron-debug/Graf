@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Graf
 {
@@ -91,7 +92,7 @@ namespace Graf
                     {
                         int t = 0;
                         for (int j = 0; j < vertex; j++)
-                            if (graf[i,j].Checked)
+                            if (graf[i, j].Checked)
                                 t++;
                         if (t > max)
                         {
@@ -99,10 +100,33 @@ namespace Graf
                             max_vertex = i;
                         }
                     }
-                    MyMatrix tr = transport();
-                    if (allOne(tr)) connectivity = "связный";
-                    else connectivity = "несвязный";
-                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity);
+
+                    // Проверка связности
+                    connectivity = "связный";
+                    List<List<int>> comp = new List<List<int>>(); 
+                    for (int i = 0; i < vertex; i++)
+                    {
+                        int maxj = i;
+                        List<int> tcom = new List<int>();
+                        for ( int j = i; j < vertex; j++)
+                        {
+
+                            bool[] visited = new bool[vertex];
+                            if (!dfs(i, j, visited))
+                            {
+                                connectivity = "несвязный";
+                            }
+                            else
+                            {
+                                tcom.Add(j);
+                                maxj = j;
+                            }
+                            
+                        }
+                        i = maxj;
+                        comp.Add(tcom);
+                    }
+                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp);
                     f.ShowDialog();
                 }
                 else
@@ -194,6 +218,7 @@ namespace Graf
                     result++;
             return result;
         }
+
         private MyMatrix transport()
         {
             MyMatrix result;
@@ -205,25 +230,24 @@ namespace Graf
                         result[i, j] = 1;
                     if (i == j) result[i, j] = 1;
                 }
-            Console.WriteLine(result);
             bool trans = false;
             int count = 1;
             while (!trans)
-            {            
+            {
                 MyMatrix p;
                 p = result * result;
                 for (int i = 1; i < count; i++)
                     p *= p;
                 count++;
                 trans = true;
-                for(int i = 0; i<vertex; i++)
-                    for(int j = 0; j<vertex; j++)
+                for (int i = 0; i < vertex; i++)
+                    for (int j = 0; j < vertex; j++)
                     {
                         if (p[i, j] > 1) p[i, j] = 1;
-                        if((p[i,j] != result[i, j])&&(p[i,j] == 1)) trans = false; 
+                        if ((p[i, j] != result[i, j]) && (p[i, j] == 1)) trans = false;
                         if (p[i, j] == 1) result[i, j] = 1;
                     }
-                
+
             }
             return result;
         }
@@ -234,6 +258,14 @@ namespace Graf
                     if (m[i, j] != 1)
                         return false;
             return true;
+        }
+        bool dfs (int u, int t, bool[] visited)
+        {
+            if (u == t) return true;
+            visited[u] = true;
+            for (int j = 0; j < vertex; j++)
+                if ((graf[u, j].Checked) && (!visited[j]) && (dfs(j, t, visited))) return true;
+            return false;
         }
     }
 }
