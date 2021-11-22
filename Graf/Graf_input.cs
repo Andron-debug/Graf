@@ -102,13 +102,14 @@ namespace Graf
                     }
 
                     // Проверка связности
+                    // Проверка связности
                     connectivity = "связный";
-                    List<List<int>> comp = new List<List<int>>(); 
+                    List<List<int>> comp = new List<List<int>>();
                     for (int i = 0; i < vertex; i++)
                     {
                         int maxj = i;
                         List<int> tcom = new List<int>();
-                        for ( int j = i; j < vertex; j++)
+                        for (int j = i; j < vertex; j++)
                         {
 
                             bool[] visited = new bool[vertex];
@@ -121,12 +122,12 @@ namespace Graf
                                 tcom.Add(j);
                                 maxj = j;
                             }
-                            
+
                         }
                         i = maxj;
                         comp.Add(tcom);
                     }
-                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp);
+                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp, transport());
                     f.ShowDialog();
                 }
                 else
@@ -171,12 +172,35 @@ namespace Graf
                         max_out_vertex = i;
                     }
                 }
-                MyMatrix tr = transport();
-                Console.WriteLine(tr.ToString());
-                Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex, connectivity); //int mxi, int mxiv, int mxo, int mxov
+                connectivity = "сильно связный";
+                for (int i = 0; i < vertex; i++)
+                {
+                    for(int j = 0; j< vertex; j++) 
+                    {
+                        bool[] visited = new bool[vertex];
+                        if (!dfs(i, j, visited))
+                        {
+                            visited = new bool[vertex];
+                            if (dfs(j, i, visited) && (connectivity != "слабо связный") && (connectivity != "несвязный"))
+                            {
+                                connectivity = "односторонне связный";
+                            }
+                            else if ((connectivity != "слабо связный") && (connectivity != "несвязный"))
+                            {
+                                if (weak_con()) connectivity = "слабо связный";
+                                else connectivity = "несвязный";
+                                break;
+                            }
+                            else break;
+                        }
+                        if ((connectivity != "слабо связный") || (connectivity != "несвязный")) break;
+                    }
+                }
+                Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex, connectivity, transport()); 
                 f.ShowDialog();
             }
         }
+        //Проверка симетричности матрицы
         private bool is_graf_test()
         {
             bool result = true;
@@ -192,6 +216,7 @@ namespace Graf
             }
             return result;
         }
+        //Количество связий
         private int checkedCount()
         {
             int result = 0;
@@ -200,6 +225,7 @@ namespace Graf
                     if (graf[i, j].Checked) result++;
             return result;
         }
+        //Симетричное замыкание матрицы
         private void closing()
         {
             for (int i = 0; i < vertex; i++)
@@ -210,6 +236,7 @@ namespace Graf
                         graf[j, i].Checked = true;
                     }
         }
+        //Количество петель
         private int loopsCount()
         {
             int result = 0;
@@ -218,7 +245,7 @@ namespace Graf
                     result++;
             return result;
         }
-
+        //Матрица достижимости
         private MyMatrix transport()
         {
             MyMatrix result;
@@ -251,14 +278,8 @@ namespace Graf
             }
             return result;
         }
-        private bool allOne(MyMatrix m)
-        {
-            for (int i = 0; i < m.N; i++)
-                for (int j = 0; j < m.K; j++)
-                    if (m[i, j] != 1)
-                        return false;
-            return true;
-        }
+
+        //Глубокй поиск
         bool dfs (int u, int t, bool[] visited)
         {
             if (u == t) return true;
@@ -267,5 +288,34 @@ namespace Graf
                 if ((graf[u, j].Checked) && (!visited[j]) && (dfs(j, t, visited))) return true;
             return false;
         }
+        bool dfs(int u, int t, bool[] visited, bool[,] gr)
+        {
+            if (u == t) return true;
+            visited[u] = true;
+            for (int j = 0; j < vertex; j++)
+                if ((gr[u, j]) && (!visited[j]) && (dfs(j, t, visited, gr))) return true;
+            return false;
+        }
+
+        //Проверка слабой связности орграфа
+        bool weak_con()
+        {
+            bool[,] gr = new bool[vertex, vertex];
+            for (int i = 0; i < vertex; i++)
+                for (int j = 0; j < vertex; j++)
+                    gr[i, j] = (graf[i, j].Checked) || (graf[j, i].Checked);
+            for (int i = 0; i < vertex; i++)
+            {
+                bool[] visited = new bool[vertex];
+                for (int j = 0; j < vertex; j++)
+                {
+                    if (!dfs(i, j, visited, gr)) return false;
+                }
+
+            }
+                
+            return true;
+        }
+        
     }
 }

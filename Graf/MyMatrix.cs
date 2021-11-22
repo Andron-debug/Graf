@@ -2,7 +2,7 @@
 
 namespace Matrix
 {
-    class MyMatrix
+    public class MyMatrix
     {
         private double[,] a;
         private int n;

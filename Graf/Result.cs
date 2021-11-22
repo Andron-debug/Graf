@@ -11,12 +11,13 @@ namespace Graf
         int edge;
         int loops;
         string connectivity;
-        List<List<int>> comp;
+        MyMatrix transport;
 
         //Граф
         int max = -1;
         int max_vertex = -1;
-        public Result(int v, int e, int l, int m, int mv, string c, List<List<int>> cm)
+        List<List<int>> comp;
+        public Result(int v, int e, int l, int m, int mv, string c, List<List<int>> cm, MyMatrix t)
         {
             InitializeComponent();
             Result_textBox.Text = "";
@@ -27,13 +28,14 @@ namespace Graf
             max_vertex = mv;
             connectivity = c;
             comp = cm;
+            transport = t;
         }
         //Орграф
         int max_in = -1;
         int max_out = -1;
         int max_in_vertex = -1;
         int max_out_vertex = -1;
-        public Result(int v, int e, int l, int mxi, int mxiv, int mxo, int mxov, string c)
+        public Result(int v, int e, int l, int mxi, int mxiv, int mxo, int mxov, string c, MyMatrix t)
         {
             InitializeComponent();
             Result_textBox.Text = "";
@@ -45,30 +47,36 @@ namespace Graf
             max_in_vertex = mxiv;
             max_out_vertex = mxov;
             connectivity = c;
+            transport = t;
         }
         private void Result_Load(object sender, EventArgs e)
         {
-            Result_textBox.Text += $"Количество вершин {vertex}{Environment.NewLine}";
+            Result_textBox.Text += $"Количество вершин: {vertex}{Environment.NewLine}";
 
-            Result_textBox.Text += $"Количество петель {loops}{Environment.NewLine}";
+            Result_textBox.Text += $"Количество петель: {loops}{Environment.NewLine}";
             if (max != -1)
             {
-                Result_textBox.Text += $"Количество ребер {edge}{Environment.NewLine}";
-                Result_textBox.Text += $"Максимальная степень {max} у вершины {max_vertex}{Environment.NewLine}";
+                Result_textBox.Text += $"Количество ребер: {edge}{Environment.NewLine}";
+                Result_textBox.Text += $"Максимальная степень {max} при вершине {max_vertex}{Environment.NewLine}";
             }
             if (max_in != -1)
             {
-                Result_textBox.Text += $"Количество ребер дуг {edge}{Environment.NewLine}";
-                Result_textBox.Text += $"Максимальная степень по заходам {max_in} у вершины {max_in_vertex}{Environment.NewLine}";
-                Result_textBox.Text += $"Максимальная степень по исходам {max_out} у вершины {max_out_vertex}{Environment.NewLine}";
+                Result_textBox.Text += $"Количество ребер дуг: {edge}{Environment.NewLine}";
+                Result_textBox.Text += $"Максимальная степень по заходам {max_in} при вершине {max_in_vertex}{Environment.NewLine}";
+                Result_textBox.Text += $"Максимальная степень по исходам {max_out} при вершине {max_out_vertex}{Environment.NewLine}";
             }
             Result_textBox.Text += $"Фактор связности: {connectivity}{Environment.NewLine}";
-            Result_textBox.Text += "Компоненты связности" + Environment.NewLine;
-            foreach (List<int> l in comp)
+            if (comp != null)
             {
-                foreach (int c in l) Result_textBox.Text += c + " ";
-                Result_textBox.Text += Environment.NewLine;
+                Result_textBox.Text += $"Количество компонент связности: {comp.Count}{Environment.NewLine}";
+                Result_textBox.Text += "Компоненты связности:" + Environment.NewLine;
+                foreach (List<int> l in comp)
+                {
+                    foreach (int c in l) Result_textBox.Text += c + " ";
+                    Result_textBox.Text += Environment.NewLine;
+                }
             }
+            Result_textBox.Text += $"Матрица достижимости:{Environment.NewLine}{transport}";
         }
     }
 }
