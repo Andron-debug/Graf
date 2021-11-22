@@ -28,5 +28,10 @@ namespace Graf
 
 
         }
+
+        private void About_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
