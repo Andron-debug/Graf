@@ -46,7 +46,7 @@ namespace Graf
             X = xx;
             Y = yy;
             fo = new Font("Arial", 10);
-            br = Brushes.Red;
+            
             number = n;
         }
 
@@ -54,6 +54,7 @@ namespace Graf
         public void Draw(Graphics gr)
         {
             Pen pn = new Pen(Color.Black, 2);
+            br = Brushes.Black;
             point = new PointF(x-8, y-8);
             gr.DrawEllipse(pn, x - 10, y - 10, 20, 20);
             gr.DrawString(number, fo, br, point);
@@ -94,7 +95,7 @@ namespace Graf
 
         public void Draw(Graphics gr)
         {
-            Pen pen = new Pen(Color.BlueViolet, 3);
+            Pen pen = new Pen(Color.BlueViolet, 1);
 
             gr.DrawLine(pen, X1, Y1, X2, Y2);
         }
@@ -106,8 +107,8 @@ namespace Graf
         }
         public new void Draw(Graphics gr)
         {
-            AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
-            Pen pen = new Pen(Color.BlueViolet, 3);
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(2, 2);
+            Pen pen = new Pen(Color.BlueViolet, 1);
             pen.CustomEndCap = bigArrow;
             gr.DrawLine(pen, X1, Y1, X2, Y2);
         }

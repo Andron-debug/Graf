@@ -16,6 +16,7 @@ namespace Graf
         bool type;
         CheckBox[,] graf;
         List<IDraw> draws;
+        MyEllipse[] vertex_array;
 
         public Draw(int v, bool t, CheckBox[,] g)
         {
@@ -28,6 +29,7 @@ namespace Graf
         private void Draw_Load(object sender, EventArgs e)
         {
             draws = new List<IDraw>();
+            vertex_array = new MyEllipse[vextex];
             int r = panel1.Height / 4;
             int x0 = panel1.Width / 2;
             int y0 = panel1.Height / 2;
@@ -35,9 +37,24 @@ namespace Graf
             for (int i = 0; i <vextex; i++)
             {
                 MyEllipse v = new MyEllipse(Convert.ToInt32(x0 + r * Math.Sin(a * i)), Convert.ToInt32(y0 + r * Math.Cos(a * i)), i.ToString());
+                vertex_array[i] = v; 
                 draws.Add(v);
             }
-
+            if (type)//если граф
+            {
+                for (int i = 0; i < vextex; i++)
+                {
+                    for (int j = i; j < vextex; j++)
+                    {
+                        if ((graf[i,j].Checked)&&(i!=j))
+                        {
+                            MyLine eg = new MyLine(vertex_array[i].X, vertex_array[i].Y, vertex_array[j].X, vertex_array[j].Y);
+                            draws.Add(eg);
+                        }
+                    }
+                }
+            }
+            draws.Reverse();
             panel1.Refresh();
         }
 
