@@ -14,12 +14,11 @@ namespace Graf
     }
     public class MyEllipse:IDraw
     {
-        Font fo;
-        Brush br;
-        PointF point;
-        private int x;
-        private int y;
-        private string number;
+
+        protected int x;
+        protected int y;
+        protected string number;
+        protected int r = 20;
         public int X
         {
             get { return x; }
@@ -41,25 +40,32 @@ namespace Graf
         {
             get { return number; }
         }
+        public int R
+        {
+            get { return r; }
+        }
         public MyEllipse(int xx, int yy, string n)
         {
             X = xx;
             Y = yy;
-            fo = new Font("Arial", 10);
-            
             number = n;
         }
 
 
         public void Draw(Graphics gr)
         {
-            Pen pn = new Pen(Color.Black, 2);
+            Font fo;
+            Brush br;
+            PointF point;
+            fo = new Font("Arial", 10);
+            Pen pn = new Pen(Color.Black, 1);
             br = Brushes.Black;
-            point = new PointF(x-8, y-8);
-            gr.DrawEllipse(pn, x - 10, y - 10, 20, 20);
+            point = new PointF(x-r/2, y-r/2);
+            gr.DrawEllipse(pn, x - r, y - r, 2*r, r*2);
             gr.DrawString(number, fo, br, point);
         }
     }
+
 
     public class MyLine:IDraw
     {
@@ -107,7 +113,7 @@ namespace Graf
         }
         public new void Draw(Graphics gr)
         {
-            AdjustableArrowCap bigArrow = new AdjustableArrowCap(2, 2);
+            AdjustableArrowCap bigArrow = new AdjustableArrowCap(4, 4);
             Pen pen = new Pen(Color.BlueViolet, 1);
             pen.CustomEndCap = bigArrow;
             gr.DrawLine(pen, X1, Y1, X2, Y2);
