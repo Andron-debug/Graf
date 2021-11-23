@@ -12,12 +12,13 @@ namespace Graf
         int loops;
         string connectivity;
         MyMatrix transport;
+        CheckBox[,] graf;
 
         //Граф
         int max = -1;
         int max_vertex = -1;
         List<List<int>> comp;
-        public Result(int v, int e, int l, int m, int mv, string c, List<List<int>> cm, MyMatrix t)
+        public Result(int v, int e, int l, int m, int mv, string c, List<List<int>> cm, MyMatrix t, CheckBox[,] g)
         {
             InitializeComponent();
             Result_textBox.Text = "";
@@ -29,13 +30,14 @@ namespace Graf
             connectivity = c;
             comp = cm;
             transport = t;
+            graf = g;
         }
         //Орграф
         int max_in = -1;
         int max_out = -1;
         int max_in_vertex = -1;
         int max_out_vertex = -1;
-        public Result(int v, int e, int l, int mxi, int mxiv, int mxo, int mxov, string c, MyMatrix t)
+        public Result(int v, int e, int l, int mxi, int mxiv, int mxo, int mxov, string c, MyMatrix t, CheckBox[,] g)
         {
             InitializeComponent();
             Result_textBox.Text = "";
@@ -48,6 +50,7 @@ namespace Graf
             max_out_vertex = mxov;
             connectivity = c;
             transport = t;
+            graf = g;
         }
         private void Result_Load(object sender, EventArgs e)
         {
@@ -77,6 +80,26 @@ namespace Graf
                 }
             }
             Result_textBox.Text += $"Матрица достижимости:{Environment.NewLine}{transport}";
+            Result_textBox.Text += $"Матрица смежности:{Environment.NewLine}";
+            for (int i = 0; i < vertex; i++)
+            {
+                for (int j = 0; j < vertex; j++)
+                {
+                    if (graf[i, j].Checked) Result_textBox.Text += "1 ";
+                    else Result_textBox.Text += "0 ";
+                }
+                Result_textBox.Text += Environment.NewLine;
+            }
+            Result_textBox.Text += $"Список смежности:{Environment.NewLine}";
+            for (int i = 0; i < vertex; i++)
+            {
+                Result_textBox.Text += i.ToString() + ": ";
+                for (int j = 0; j < vertex; j++)
+                {
+                    if (graf[i, j].Checked) Result_textBox.Text += j.ToString()+" ";
+                }
+                Result_textBox.Text += Environment.NewLine;
+            }
         }
     }
 }

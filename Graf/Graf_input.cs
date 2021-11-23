@@ -75,6 +75,7 @@ namespace Graf
         */
         private void Analyze_Click(object sender, EventArgs e)
         {
+            
             int edge;//кол-во ребр
             int loops;//кол-во петель
             string connectivity = "";
@@ -127,7 +128,7 @@ namespace Graf
                         i = maxj;
                         comp.Add(tcom);
                     }
-                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp, transport());
+                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp, transport(), graf);
                     f.ShowDialog();
                 }
                 else
@@ -196,7 +197,7 @@ namespace Graf
                         if ((connectivity != "слабо связный") || (connectivity != "несвязный")) break;
                     }
                 }
-                Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex, connectivity, transport()); 
+                Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex, connectivity, transport(), graf); 
                 f.ShowDialog();
             }
         }
