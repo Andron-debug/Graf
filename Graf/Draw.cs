@@ -30,7 +30,7 @@ namespace Graf
         {
             draws = new List<IDraw>();
             vertex_array = new MyEllipse[vextex];
-            int r = panel1.Height / 4;
+            int r = panel1.Height / 3;
             int x0 = panel1.Width / 2;
             int y0 = panel1.Height / 2;
             double a = 2 * Math.PI / vextex;
@@ -54,8 +54,7 @@ namespace Graf
                         }
                         if ((graf[i, j].Checked) && (i == j))
                         {
-                            MyEllipse eg = new MyEllipse(vertex_array[i].X - vertex_array[i].R - vertex_array[i].R/2, vertex_array[i].Y - vertex_array[i].R - vertex_array[i].R / 2, "L");
-                            draws.Add(eg);
+                            vertex_array[i].C = Color.BlueViolet;
                         }
                     }
             }
@@ -71,8 +70,7 @@ namespace Graf
                         }
                         if ((graf[i, j].Checked) && (i == j))
                         {
-                            MyEllipse eg = new MyEllipse(vertex_array[i].X - vertex_array[i].R - vertex_array[i].R / 2, vertex_array[i].Y - vertex_array[i].R - vertex_array[i].R / 2, "L");
-                            draws.Add(eg);
+                            vertex_array[i].C = Color.BlueViolet;
                         }
                     }
             }

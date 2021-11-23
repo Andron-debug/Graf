@@ -19,6 +19,7 @@ namespace Graf
         protected int y;
         protected string number;
         protected int r = 20;
+        protected Color c = Color.Black;
         public int X
         {
             get { return x; }
@@ -27,7 +28,13 @@ namespace Graf
                 x = value;
             }
         }
-
+        public Color C
+        {
+            set
+            {
+                c = value;
+            }
+        }
         public int Y
         {
             get { return y; }
@@ -58,7 +65,7 @@ namespace Graf
             Brush br;
             PointF point;
             fo = new Font("Arial", 10);
-            Pen pn = new Pen(Color.Black, 1);
+            Pen pn = new Pen(c, 1);
             br = Brushes.Black;
             point = new PointF(x-r/2, y-r/2);
             gr.DrawEllipse(pn, x - r, y - r, 2*r, r*2);
