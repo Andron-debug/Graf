@@ -335,8 +335,36 @@ namespace Graf
 
         private void Draw_Click(object sender, EventArgs e)
         {
-            Form f = new Draw(vertex, is_graf.Checked, graf);
-            f.ShowDialog();
+            if (is_graf.Checked)
+            {
+                if (is_graf_test())
+                {
+                    Form f = new Draw(vertex, is_graf.Checked, graf);
+                    f.ShowDialog();
+                }
+                else
+                {
+                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости симетризацию?", "Ошибка ввода", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes) closing();
+                }
+            }
+            else
+            {
+                Form f = new Draw(vertex, is_graf.Checked, graf);
+                f.ShowDialog();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            closing();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < vertex; i++)
+                for (int j = 0; j < vertex; j++)
+                    graf[i, j].Checked = false;
         }
     }
 }
