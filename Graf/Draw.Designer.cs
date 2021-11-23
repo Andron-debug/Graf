@@ -1,7 +1,7 @@
 ﻿
 namespace Graf
 {
-    partial class Result
+    partial class Draw
     {
         /// <summary>
         /// Required designer variable.
@@ -29,37 +29,33 @@ namespace Graf
         /// </summary>
         private void InitializeComponent()
         {
-            this.Result_textBox = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // Result_textBox
+            // panel1
             // 
-            this.Result_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Result_textBox.Location = new System.Drawing.Point(12, 12);
-            this.Result_textBox.Multiline = true;
-            this.Result_textBox.Name = "Result_textBox";
-            this.Result_textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Result_textBox.Size = new System.Drawing.Size(282, 374);
-            this.Result_textBox.TabIndex = 0;
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(767, 426);
+            this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // Result
+            // Draw
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(309, 399);
-            this.Controls.Add(this.Result_textBox);
-            this.Name = "Result";
-            this.Text = "Result";
-            this.Load += new System.EventHandler(this.Result_Load);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panel1);
+            this.Name = "Draw";
+            this.Text = "Draw";
+            this.Load += new System.EventHandler(this.Draw_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox Result_textBox;
+        private System.Windows.Forms.Panel panel1;
     }
 }

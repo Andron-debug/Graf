@@ -94,7 +94,10 @@ namespace Graf
                         int t = 0;
                         for (int j = 0; j < vertex; j++)
                             if (graf[i, j].Checked)
+                            {
                                 t++;
+                                if (i == j) t++;
+                            }
                         if (t > max)
                         {
                             max = t;
@@ -134,7 +137,7 @@ namespace Graf
                 else
                 {
 
-                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости замыкание автоматически?", "Ошибка ввода", MessageBoxButtons.YesNo);
+                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости симетризацию?", "Ошибка ввода", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes) closing();
                 }
             }
@@ -194,7 +197,7 @@ namespace Graf
                             }
                             else break;
                         }
-                        if ((connectivity != "слабо связный") || (connectivity != "несвязный")) break;
+                        if ((connectivity == "слабо связный") || (connectivity == "несвязный")) break;
                     }
                 }
                 Form f = new Result(vertex, edge, loops, max_in, max_in_vertex, max_out, max_out_vertex, connectivity, transport(), graf); 
@@ -304,12 +307,17 @@ namespace Graf
             bool[,] gr = new bool[vertex, vertex];
             for (int i = 0; i < vertex; i++)
                 for (int j = 0; j < vertex; j++)
-                    gr[i, j] = (graf[i, j].Checked) || (graf[j, i].Checked);
+                    if (graf[i, j].Checked)
+                    {
+                        gr[i, j] = true;
+                        gr[j, i] = true;
+                    }
+            
             for (int i = 0; i < vertex; i++)
             {
-                bool[] visited = new bool[vertex];
                 for (int j = 0; j < vertex; j++)
                 {
+                    bool[] visited = new bool[vertex];
                     if (!dfs(i, j, visited, gr)) return false;
                 }
 
@@ -317,6 +325,18 @@ namespace Graf
                 
             return true;
         }
-        
+
+        private void Back_Click(object sender, EventArgs e)
+        {
+            Form f = new Form1();
+            f.Show();
+            this.Hide();
+        }
+
+        private void Draw_Click(object sender, EventArgs e)
+        {
+            Form f = new Draw(vertex, is_graf.Checked, graf);
+            f.ShowDialog();
+        }
     }
 }
