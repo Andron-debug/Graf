@@ -100,6 +100,30 @@ namespace Graf
                 }
                 Result_textBox.Text += Environment.NewLine;
             }
+            Result_textBox.Text += $"Список инцеденциый:{Environment.NewLine}";
+            for (int i = 0; i < vertex; i++)
+            {
+                Result_textBox.Text += i.ToString() + ": ";
+                for (int j = 0; j < vertex; j++)
+                {
+                    if (graf[i, j].Checked)
+                    {
+                        int s = i;
+                        int f = j;
+                        if ((i > j)&&(max_in == -1))//не является орграфом
+                        {
+                            s = j;
+                            f = i;
+                        }
+                        Result_textBox.Text += $"{s}-{f} ";
+                    }
+                    if ((max_in != -1)&& (graf[j, i].Checked)&&(i!=j))
+                    {
+                        Result_textBox.Text += $"{j}-{i} ";
+                    }
+                }
+                Result_textBox.Text += Environment.NewLine;
+            }
         }
     }
 }

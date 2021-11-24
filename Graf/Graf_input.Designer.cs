@@ -55,7 +55,7 @@ namespace Graf
             this.graf_tableLayoutPanel.Name = "graf_tableLayoutPanel";
             this.graf_tableLayoutPanel.RowCount = 1;
             this.graf_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.graf_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.graf_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.graf_tableLayoutPanel.Size = new System.Drawing.Size(53, 38);
             this.graf_tableLayoutPanel.TabIndex = 1;
             // 
@@ -95,7 +95,7 @@ namespace Graf
             // 
             // Analyze
             // 
-            this.Analyze.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Analyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Analyze.Location = new System.Drawing.Point(167, 161);
             this.Analyze.Name = "Analyze";
             this.Analyze.Size = new System.Drawing.Size(128, 39);
@@ -106,7 +106,7 @@ namespace Graf
             // 
             // Back
             // 
-            this.Back.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Back.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Back.Location = new System.Drawing.Point(445, 162);
             this.Back.Name = "Back";
             this.Back.Size = new System.Drawing.Size(45, 38);
@@ -117,7 +117,7 @@ namespace Graf
             // 
             // Draw
             // 
-            this.Draw.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Draw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Draw.Location = new System.Drawing.Point(167, 116);
             this.Draw.Name = "Draw";
             this.Draw.Size = new System.Drawing.Size(128, 39);
@@ -128,18 +128,18 @@ namespace Graf
             // 
             // button1
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button1.Location = new System.Drawing.Point(301, 116);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(128, 39);
             this.button1.TabIndex = 7;
-            this.button1.Text = "Симетровать";
+            this.button1.Text = "Симетрировать";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Location = new System.Drawing.Point(301, 161);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(128, 39);
