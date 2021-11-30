@@ -137,7 +137,7 @@ namespace Graf
                 else
                 {
 
-                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости симетризацию?", "Ошибка ввода", MessageBoxButtons.YesNo);
+                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости симметризацию?", "Ошибка ввода", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes) closing();
                 }
             }
@@ -344,7 +344,7 @@ namespace Graf
                 }
                 else
                 {
-                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости симетризацию?", "Ошибка ввода", MessageBoxButtons.YesNo);
+                    DialogResult result = MessageBox.Show("Матрица не симетрична! Провости симметризацию?", "Ошибка ввода", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes) closing();
                 }
             }

@@ -68,7 +68,7 @@ namespace Graf
                 Result_textBox.Text += $"Максимальная степень по заходам {max_in} при вершине {max_in_vertex}{Environment.NewLine}";
                 Result_textBox.Text += $"Максимальная степень по исходам {max_out} при вершине {max_out_vertex}{Environment.NewLine}";
             }
-            Result_textBox.Text += $"Фактор связности: {connectivity}{Environment.NewLine}";
+            Result_textBox.Text += $"Категория связности: {connectivity}{Environment.NewLine}";
             if (comp != null)
             {
                 Result_textBox.Text += $"Количество компонент связности: {comp.Count}{Environment.NewLine}";
