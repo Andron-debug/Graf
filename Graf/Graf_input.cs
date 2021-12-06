@@ -123,15 +123,8 @@ namespace Graf
                         i = maxj;
                         comp.Add(tcom);
                     }
-                    //Гамилтьон
-                    gameltons = new List<List<int>>();
-                    bool[] DOP = new bool[vertex];
-                    for (int i = 0; i < vertex; i++) DOP[i] = true;
-                    List<int> X = new List<int>();
-                    X.Add(0);
-                    DOP[0] = false;
-                    ganmliton(1, X, DOP);
-                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp, transport(), graf, gameltons);
+
+                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp, transport(), graf);
                     f.ShowDialog();
                 }
                 else
@@ -326,23 +319,19 @@ namespace Graf
             return true;
         }
         //Поиск гамильтоновых циклов
-        private void ganmliton(int step, List<int> X, bool[] DOP)
+        private void ganmliton(List<int> X)
         {
-            for (int y = 0; y < vertex; y++) if (graf[step - 1, y].Checked)
-                    if ((step == vertex) && (y == X[0]))
+            for (int y = 0; y < vertex; y++) if (graf[X[X.Count - 1], y].Checked)
+                    if ((X.Count == vertex) && (y == X[0]))
                     {
                         X.Add(X[0]);
                         gameltons.Add(X);
                     } 
-                    else if(DOP[y])
+                    else if(!X.Contains(y))
                     {
                         List<int> xx = new List<int>(X);
                         xx.Add(y);
-                        DOP[y] = false;
-                        bool[] d = new bool[vertex];
-                        Array.Copy(DOP,d, vertex);
-                        ganmliton(step + 1, xx, d);
-                        DOP[y] = true;
+                        ganmliton(xx);
                     }
         }
         private void Back_Click(object sender, EventArgs e)
@@ -384,6 +373,26 @@ namespace Graf
             for (int i = 0; i < vertex; i++)
                 for (int j = 0; j < vertex; j++)
                     graf[i, j].Checked = false;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            gameltons = new List<List<int>>();
+            List<int> X = new List<int>();
+            X.Add(0);
+            ganmliton(X);
+            if(gameltons.Count == 0)
+            {
+                if (is_graf.Checked)
+                    MessageBox.Show("В графе нет гамильтоновых циклов");
+                else
+                    MessageBox.Show("В орграфе нет гамильтоновых циклов");
+            }
+            else
+            {
+                Form f = new Gamilton(gameltons);
+                f.ShowDialog();
+            }
         }
     }
 }

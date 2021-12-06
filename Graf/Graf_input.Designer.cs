@@ -38,6 +38,7 @@ namespace Graf
             this.Draw = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // graf_tableLayoutPanel
@@ -56,7 +57,7 @@ namespace Graf
             this.graf_tableLayoutPanel.RowCount = 1;
             this.graf_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.graf_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.graf_tableLayoutPanel.Size = new System.Drawing.Size(53, 38);
+            this.graf_tableLayoutPanel.Size = new System.Drawing.Size(53, 42);
             this.graf_tableLayoutPanel.TabIndex = 1;
             // 
             // label1
@@ -74,7 +75,7 @@ namespace Graf
             this.is_graf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.is_graf.AutoSize = true;
             this.is_graf.Checked = true;
-            this.is_graf.Location = new System.Drawing.Point(18, 125);
+            this.is_graf.Location = new System.Drawing.Point(18, 223);
             this.is_graf.Name = "is_graf";
             this.is_graf.Size = new System.Drawing.Size(64, 21);
             this.is_graf.TabIndex = 2;
@@ -86,7 +87,7 @@ namespace Graf
             // 
             this.is_orgraf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.is_orgraf.AutoSize = true;
-            this.is_orgraf.Location = new System.Drawing.Point(18, 170);
+            this.is_orgraf.Location = new System.Drawing.Point(18, 268);
             this.is_orgraf.Name = "is_orgraf";
             this.is_orgraf.Size = new System.Drawing.Size(80, 21);
             this.is_orgraf.TabIndex = 3;
@@ -96,7 +97,7 @@ namespace Graf
             // Analyze
             // 
             this.Analyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Analyze.Location = new System.Drawing.Point(167, 161);
+            this.Analyze.Location = new System.Drawing.Point(167, 259);
             this.Analyze.Name = "Analyze";
             this.Analyze.Size = new System.Drawing.Size(128, 39);
             this.Analyze.TabIndex = 4;
@@ -107,7 +108,7 @@ namespace Graf
             // Back
             // 
             this.Back.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Back.Location = new System.Drawing.Point(445, 162);
+            this.Back.Location = new System.Drawing.Point(445, 260);
             this.Back.Name = "Back";
             this.Back.Size = new System.Drawing.Size(45, 38);
             this.Back.TabIndex = 5;
@@ -118,7 +119,7 @@ namespace Graf
             // Draw
             // 
             this.Draw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Draw.Location = new System.Drawing.Point(167, 116);
+            this.Draw.Location = new System.Drawing.Point(167, 214);
             this.Draw.Name = "Draw";
             this.Draw.Size = new System.Drawing.Size(128, 39);
             this.Draw.TabIndex = 6;
@@ -129,7 +130,7 @@ namespace Graf
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(301, 116);
+            this.button1.Location = new System.Drawing.Point(301, 214);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(128, 39);
             this.button1.TabIndex = 7;
@@ -140,7 +141,7 @@ namespace Graf
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(301, 161);
+            this.button2.Location = new System.Drawing.Point(301, 259);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(128, 39);
             this.button2.TabIndex = 8;
@@ -148,12 +149,24 @@ namespace Graf
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button3.Location = new System.Drawing.Point(167, 169);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(262, 39);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Поиск гамильтоновых циклов";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Graf_input
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(492, 209);
+            this.ClientSize = new System.Drawing.Size(492, 307);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Draw);
@@ -183,5 +196,6 @@ namespace Graf
         private System.Windows.Forms.Button Draw;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

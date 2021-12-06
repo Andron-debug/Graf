@@ -64,6 +64,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gamilton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gamilton.Designer.cs">
+      <DependentUpon>Gamilton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Graf_input.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gamilton.resx">
+      <DependentUpon>Gamilton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graf_input.resx">
       <DependentUpon>Graf_input.cs</DependentUpon>
