@@ -18,7 +18,8 @@ namespace Graf
         int max = -1;
         int max_vertex = -1;
         List<List<int>> comp;
-        public Result(int v, int e, int l, int m, int mv, string c, List<List<int>> cm, MyMatrix t, CheckBox[,] g)
+        List<List<int>> gameltons;
+        public Result(int v, int e, int l, int m, int mv, string c, List<List<int>> cm, MyMatrix t, CheckBox[,] g, List<List<int>> gam)
         {
             InitializeComponent();
             Result_textBox.Text = "";
@@ -31,7 +32,9 @@ namespace Graf
             comp = cm;
             transport = t;
             graf = g;
+            gameltons = gam;
         }
+
         //Орграф
         int max_in = -1;
         int max_out = -1;
@@ -124,6 +127,18 @@ namespace Graf
                 }
                 Result_textBox.Text += Environment.NewLine;
             }
+            Result_textBox.Text += "Гамильтоновы цылы:" + Environment.NewLine;
+            if (gameltons.Count != 0)
+            {
+                foreach (List<int> l in gameltons)
+                {
+                    foreach (int c in l) Result_textBox.Text += c + " ";
+                    Result_textBox.Text += Environment.NewLine;
+                }
+            }
+            else 
+                Result_textBox.Text += "НЕТ" + Environment.NewLine;
+
         }
     }
 }

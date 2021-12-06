@@ -71,7 +71,7 @@
       <DependentUpon>Graf_input.cs</DependentUpon>
     </Compile>
     <Compile Include="MyMatrix.cs" />
-    <Compile Include="Paint.cs" />
+    <Compile Include="Figures.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs">

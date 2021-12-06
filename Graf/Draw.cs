@@ -54,8 +54,8 @@ namespace Graf
                         }
                         if ((graf[i, j].Checked) && (i == j))
                         {
-                            vertex_array[i].C = Color.BlueViolet;
-                            vertex_array[i].W = 4;
+                            Loop l = new Loop(vertex_array[i]);
+                            draws.Add(l);
                         }
                     }
             }
@@ -71,8 +71,8 @@ namespace Graf
                         }
                         if ((graf[i, j].Checked) && (i == j))
                         {
-                            vertex_array[i].C = Color.BlueViolet;
-                            vertex_array[i].W = 4;
+                            Loop l = new Loop (vertex_array[i]);
+                            draws.Add(l);
                         }
                     }
             }

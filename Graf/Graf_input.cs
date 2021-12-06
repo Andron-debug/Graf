@@ -65,14 +65,7 @@ namespace Graf
         {
             Application.Exit();
         }
-        /*
-        количество вершин ++
-        количество ребер ++
-        количество петель ++
-        максимальная степень(для орграфа — по заходам и по исходам отдельно)++
-        категория связности
-        (для графа — связный или несвязный, для орграфа — одна из четырех категорий — сильно связный, односторонне связный, слабо связный или несвязный).
-        */
+        List<List<int>> gameltons = new List<List<int>>();
         private void Analyze_Click(object sender, EventArgs e)
         {
             
@@ -106,7 +99,6 @@ namespace Graf
                     }
 
                     // Проверка связности
-                    // Проверка связности
                     connectivity = "связный";
                     List<List<int>> comp = new List<List<int>>();
                     for (int i = 0; i < vertex; i++)
@@ -131,7 +123,15 @@ namespace Graf
                         i = maxj;
                         comp.Add(tcom);
                     }
-                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp, transport(), graf);
+                    //Гамилтьон
+                    gameltons = new List<List<int>>();
+                    bool[] DOP = new bool[vertex];
+                    for (int i = 0; i < vertex; i++) DOP[i] = true;
+                    List<int> X = new List<int>();
+                    X.Add(0);
+                    DOP[0] = false;
+                    ganmliton(1, X, DOP);
+                    Form f = new Result(vertex, edge, loops, max, max_vertex, connectivity, comp, transport(), graf, gameltons);
                     f.ShowDialog();
                 }
                 else
@@ -325,7 +325,26 @@ namespace Graf
                 
             return true;
         }
-
+        //Поиск гамильтоновых циклов
+        private void ganmliton(int step, List<int> X, bool[] DOP)
+        {
+            for (int y = 0; y < vertex; y++) if (graf[step - 1, y].Checked)
+                    if ((step == vertex) && (y == X[0]))
+                    {
+                        X.Add(X[0]);
+                        gameltons.Add(X);
+                    } 
+                    else if(DOP[y])
+                    {
+                        List<int> xx = new List<int>(X);
+                        xx.Add(y);
+                        DOP[y] = false;
+                        bool[] d = new bool[vertex];
+                        Array.Copy(DOP,d, vertex);
+                        ganmliton(step + 1, xx, d);
+                        DOP[y] = true;
+                    }
+        }
         private void Back_Click(object sender, EventArgs e)
         {
             Form f = new Form1();
